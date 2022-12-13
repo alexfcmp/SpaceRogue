@@ -31,6 +31,7 @@ namespace Gameplay.Player
 
         private readonly SubscribedProperty<Vector3> _mousePositionInput = new();
         private readonly SubscribedProperty<float> _verticalInput = new();
+        private readonly SubscribedProperty<float> _horizontalInput = new();
         private readonly SubscribedProperty<bool> _primaryFireInput = new();
 
         private const byte MaxCountOfPlayerSpawnTries = 10;
@@ -43,7 +44,7 @@ namespace Gameplay.Player
             _config = ResourceLoader.LoadObject<PlayerConfig>(_configPath);
             _view = LoadView<PlayerView>(_viewPath, GetPlayerSpawnPosition());
 
-            var inputController = new InputController(_mousePositionInput, _verticalInput, _primaryFireInput);
+            var inputController = new InputController(_mousePositionInput, _verticalInput, _horizontalInput, _primaryFireInput);
             AddController(inputController);
 
             var inventoryController = AddInventoryController(_config.Inventory);
@@ -71,7 +72,7 @@ namespace Gameplay.Player
 
         private PlayerMovementController AddMovementController(MovementConfig movementConfig, PlayerView view)
         {
-            var movementController = new PlayerMovementController(_mousePositionInput, _verticalInput, movementConfig, view);
+            var movementController = new PlayerMovementController(_mousePositionInput, _verticalInput, _horizontalInput, movementConfig, view);
             AddController(movementController);
             return movementController;
         }

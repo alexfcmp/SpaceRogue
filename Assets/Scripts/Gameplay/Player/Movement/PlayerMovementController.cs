@@ -1,4 +1,5 @@
 using Abstracts;
+using Gameplay.Mechanics.Timer;
 using Gameplay.Movement;
 using UI.Game;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Gameplay.Player.Movement
     {
         private readonly SubscribedProperty<Vector3> _mousePositionInput;
         private readonly SubscribedProperty<float> _verticalInput;
+        private readonly SubscribedProperty<float> _horizontalInput;
 
         private readonly PlayerSpeedometerView _speedometerView;
         private readonly MovementModel _model;
@@ -18,39 +20,54 @@ namespace Gameplay.Player.Movement
 		private readonly Rigidbody2D _rigidbody;
         
 		private Vector3 _currentDirection;
-		
+
+        private Timer _dashCooldownTimer;
+        private bool IsOnDashCooldown => _dashCooldownTimer.InProgress;
+
+        float cd;
         public PlayerMovementController(
             SubscribedProperty<Vector3> mousePositionInput,
             SubscribedProperty<float> verticalInput,
+            SubscribedProperty<float> horizontalInput,
             MovementConfig config,
             PlayerView view)
         {
             _mousePositionInput = mousePositionInput;
             _verticalInput = verticalInput;
+            _horizontalInput = horizontalInput;
             _view = view;
             _rigidbody = _view.GetComponent<Rigidbody2D>();
             _model = new MovementModel(config);
+            _dashCooldownTimer = new (config.DashCooldown);
+            cd = config.DashCooldown;
             _speedometerView = GameUIController.PlayerSpeedometerView;
             _speedometerView.Init(GetSpeedometerTextValue(0.0f, _model.MaxSpeed));
 
             _mousePositionInput.Subscribe(HandleHorizontalMouseInput);
             _verticalInput.Subscribe(HandleVerticalInput);
+            _horizontalInput.Subscribe(HandleHorizontalInput);
+            EntryPoint.SubscribeToUpdate(toinsp);
         }
+
+        void toinsp() => UnityEngine.Debug.Log($"Время кулдауна => {cd} | На кулдауне => {IsOnDashCooldown} | Работает ли таймер => {_dashCooldownTimer.InProgress}");
 
         protected override void OnDispose()
         {
             _mousePositionInput.Unsubscribe(HandleHorizontalMouseInput);
             _verticalInput.Unsubscribe(HandleVerticalInput);
+            _horizontalInput.Unsubscribe(HandleHorizontalInput);
+            _dashCooldownTimer.Dispose();
         }
 
 
         private void HandleVerticalInput(float newInputValue)
         {
+            /*UnityEngine.Debug.DrawRay(_view.transform.localPosition, new Vector3(_view.transform.localPosition.x - 4, _view.transform.localPosition.y, 0) - _view.transform.localPosition, Color.red);*/
             if (newInputValue != 0)
             {
                 _model.Accelerate(newInputValue > 0);
             }
-
+            
             float currentSpeed = _model.CurrentSpeed;
             float maxSpeed = _model.MaxSpeed;
             UpdateSpeedometerValue(currentSpeed, maxSpeed);
@@ -72,6 +89,22 @@ namespace Gameplay.Player.Movement
             if (newInputValue == 0 && currentSpeed < _model.StoppingSpeed && currentSpeed > -_model.StoppingSpeed)
             {
                 _model.StopMoving();
+            }
+        }
+
+        private void HandleHorizontalInput(float newInputValue)
+        {
+            if (!IsOnDashCooldown)
+            {
+                if (newInputValue > 0)
+                {
+                    _rigidbody.AddForce(new Vector3(_view.transform.position.x + 4, _view.transform.position.y, 0) - _view.transform.position, ForceMode2D.Impulse);
+                }
+                if (newInputValue < 0)
+                {
+                    _rigidbody.AddForce(new Vector3(_view.transform.position.x - 4, _view.transform.position.y, 0) - _view.transform.position, ForceMode2D.Impulse);
+                }
+                _dashCooldownTimer.Start();
             }
         }
 
