@@ -2,9 +2,11 @@ using Abstracts;
 using Gameplay.Mechanics.Timer;
 using Gameplay.Movement;
 using UI.Game;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utilities.Reactive.SubscriptionProperty;
 using Utilities.Unity;
+using Gameplay.Mechanics;
 
 namespace Gameplay.Player.Movement
 {
@@ -21,7 +23,7 @@ namespace Gameplay.Player.Movement
         
 		private Vector3 _currentDirection;
 
-        private Timer _dashCooldownTimer;
+        private Mechanics.Timer.Timer _dashCooldownTimer;
         private bool IsOnDashCooldown => _dashCooldownTimer.InProgress;
 
         float cd;
@@ -46,7 +48,7 @@ namespace Gameplay.Player.Movement
             _mousePositionInput.Subscribe(HandleHorizontalMouseInput);
             _verticalInput.Subscribe(HandleVerticalInput);
             _horizontalInput.Subscribe(HandleHorizontalInput);
-            EntryPoint.SubscribeToUpdate(toinsp);
+            /*EntryPoint.SubscribeToUpdate(toinsp);*/
         }
 
         void toinsp() => UnityEngine.Debug.Log($"Время кулдауна => {cd} | На кулдауне => {IsOnDashCooldown} | Работает ли таймер => {_dashCooldownTimer.InProgress}");
@@ -62,7 +64,7 @@ namespace Gameplay.Player.Movement
 
         private void HandleVerticalInput(float newInputValue)
         {
-            /*UnityEngine.Debug.DrawRay(_view.transform.localPosition, new Vector3(_view.transform.localPosition.x - 4, _view.transform.localPosition.y, 0) - _view.transform.localPosition, Color.red);*/
+            UnityEngine.Debug.DrawRay(_view.transform.localPosition, CalculatePerpendicularVector(_view.transform.position, newInputValue), Color.red);
             if (newInputValue != 0)
             {
                 _model.Accelerate(newInputValue > 0);
@@ -95,16 +97,10 @@ namespace Gameplay.Player.Movement
         private void HandleHorizontalInput(float newInputValue)
         {
             if (!IsOnDashCooldown)
-            {
-                if (newInputValue > 0)
-                {
-                    _rigidbody.AddForce(new Vector3(_view.transform.position.x + 4, _view.transform.position.y, 0) - _view.transform.position, ForceMode2D.Impulse);
-                }
-                if (newInputValue < 0)
-                {
-                    _rigidbody.AddForce(new Vector3(_view.transform.position.x - 4, _view.transform.position.y, 0) - _view.transform.position, ForceMode2D.Impulse);
-                }
+            {   
+                _rigidbody.AddForce(CalculatePerpendicularVector(_view.transform.position, newInputValue) - _view.transform.position, ForceMode2D.Impulse);
                 _dashCooldownTimer.Start();
+                UnityEngine.Debug.Log("obana " + CalculatePerpendicularVector(_view.transform.position, newInputValue));
             }
         }
 
@@ -149,5 +145,17 @@ namespace Gameplay.Player.Movement
                 < 0 => "R",
                 _ => $"SPD: {Mathf.RoundToInt(currentSpeed / maximumSpeed * 100)}"
             };
+
+        private Vector3 CalculatePerpendicularVector(Vector3 original, float inputValue)
+        {
+            if (inputValue == 0) return original;
+
+            Vector3 perpendicularVector = new Vector3(0, 0, 0);
+            perpendicularVector.x = original.y;
+            perpendicularVector.y = original.x;
+
+            if (inputValue > 0) { perpendicularVector.y = -perpendicularVector.y; return perpendicularVector; }
+            else { perpendicularVector.x = -perpendicularVector.x; return perpendicularVector; }
+        }
     }
 }
