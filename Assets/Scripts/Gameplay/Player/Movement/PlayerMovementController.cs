@@ -1,13 +1,9 @@
 using Abstracts;
-using Gameplay.Mechanics.Timer;
 using Gameplay.Movement;
 using UI.Game;
-using Unity.VisualScripting;
 using UnityEngine;
 using Utilities.Reactive.SubscriptionProperty;
 using Utilities.Unity;
-using Gameplay.Mechanics;
-using static UnityEngine.UI.Image;
 
 namespace Gameplay.Player.Movement
 {
@@ -27,7 +23,6 @@ namespace Gameplay.Player.Movement
         private Mechanics.Timer.Timer _dashCooldownTimer;
         private bool IsOnDashCooldown => _dashCooldownTimer.InProgress;
 
-        float cd; //'ll delete
         Transform _crosshairTransform;
         public PlayerMovementController(
             SubscribedProperty<Vector3> mousePositionInput,
@@ -44,7 +39,6 @@ namespace Gameplay.Player.Movement
             _rigidbody = _view.GetComponent<Rigidbody2D>();
             _model = new MovementModel(config);
             _dashCooldownTimer = new (config.DashCooldown);
-            cd = config.DashCooldown; //'ll delete
             _speedometerView = GameUIController.PlayerSpeedometerView;
             _speedometerView.Init(GetSpeedometerTextValue(0.0f, _model.MaxSpeed));
             _crosshairTransform = crosshairTransform;
