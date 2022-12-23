@@ -24,8 +24,9 @@ namespace Gameplay.Movement
         [Min(0.1f)]
         [SerializeField] public float turnAccelerationTime = 0.1f;
 
-        [Header("Cooldown")]
+        [Header("SideDash")]
         [Min(0.1f)]
         [SerializeField] public float DashCooldown = 3f;
+        [SerializeField] public float DashForce = 3f;
     }
 }

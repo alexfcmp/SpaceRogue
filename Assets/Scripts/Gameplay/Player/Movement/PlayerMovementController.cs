@@ -22,8 +22,10 @@ namespace Gameplay.Player.Movement
 
         private Mechanics.Timer.Timer _dashCooldownTimer;
         private bool IsOnDashCooldown => _dashCooldownTimer.InProgress;
+        private float _dashForce;
 
         Transform _crosshairTransform;
+
         public PlayerMovementController(
             SubscribedProperty<Vector3> mousePositionInput,
             SubscribedProperty<float> verticalInput,
@@ -39,6 +41,7 @@ namespace Gameplay.Player.Movement
             _rigidbody = _view.GetComponent<Rigidbody2D>();
             _model = new MovementModel(config);
             _dashCooldownTimer = new (config.DashCooldown);
+            _dashForce = config.DashForce;
             _speedometerView = GameUIController.PlayerSpeedometerView;
             _speedometerView.Init(GetSpeedometerTextValue(0.0f, _model.MaxSpeed));
             _crosshairTransform = crosshairTransform;
@@ -58,8 +61,6 @@ namespace Gameplay.Player.Movement
 
         private void HandleVerticalInput(float newInputValue)
         {
-            UnityEngine.Debug.DrawRay(_view.transform.position, CalculatePerpendicularVector(_crosshairTransform.position - _view.transform.position), Color.red);
-            UnityEngine.Debug.DrawRay(_view.transform.position, _crosshairTransform.position - _view.transform.position, Color.magenta);
             if (newInputValue != 0)
             {
                 _model.Accelerate(newInputValue > 0);
@@ -98,12 +99,10 @@ namespace Gameplay.Player.Movement
                 var dir = _crosshairTransform.position - _view.transform.position;
                 dir.Normalize();
 
-                if (newInputValue > 0) _rigidbody.AddForce(CalculatePerpendicularVector(dir), ForceMode2D.Impulse);
-                else _rigidbody.AddForce(CalculatePerpendicularVector(-dir), ForceMode2D.Impulse);
+                if (newInputValue > 0) _rigidbody.AddForce(CalculatePerpendicularVector(dir) * _dashForce, ForceMode2D.Impulse);
+                else _rigidbody.AddForce(CalculatePerpendicularVector(-dir) * _dashForce, ForceMode2D.Impulse);
 
                 _dashCooldownTimer.Start();
-
-                UnityEngine.Debug.Log("obana " + CalculatePerpendicularVector(_view.transform.position));
             }
         }
 
@@ -155,7 +154,7 @@ namespace Gameplay.Player.Movement
             perpendicularVector.x = original.y;
             perpendicularVector.y = -original.x;
 
-            return perpendicularVector;
+            return perpendicularVector.normalized;
         }
     }
 }
