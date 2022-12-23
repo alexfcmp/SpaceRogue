@@ -37,6 +37,8 @@ namespace Gameplay.Player
         private const byte MaxCountOfPlayerSpawnTries = 10;
         private const float PlayerSpawnClearanceRadius = 40.0f;
 
+        private Transform _crosshairTransform;
+
         public event Action PlayerDestroyed = () => { };
 
         public PlayerController()
@@ -48,10 +50,10 @@ namespace Gameplay.Player
             AddController(inputController);
 
             var inventoryController = AddInventoryController(_config.Inventory);
-            var movementController = AddMovementController(_config.Movement, _view);
             var frontalGunsController = AddFrontalGunsController(inventoryController.Turrets, _view);
             var healthController = AddHealthController(_config.HealthConfig, _config.ShieldConfig);
             AddCrosshair();
+            var movementController = AddMovementController(_config.Movement, _crosshairTransform, _view);
         }
 
         private HealthController AddHealthController(HealthConfig healthConfig, ShieldConfig shieldConfig)
@@ -70,9 +72,9 @@ namespace Gameplay.Player
             return inventoryController;
         }
 
-        private PlayerMovementController AddMovementController(MovementConfig movementConfig, PlayerView view)
+        private PlayerMovementController AddMovementController(MovementConfig movementConfig, Transform crosshairTransform, PlayerView view)
         {
-            var movementController = new PlayerMovementController(_mousePositionInput, _verticalInput, _horizontalInput, movementConfig, view);
+            var movementController = new PlayerMovementController(_mousePositionInput, _verticalInput, _horizontalInput, movementConfig, crosshairTransform, view);
             AddController(movementController);
             return movementController;
         }
@@ -120,6 +122,7 @@ namespace Gameplay.Player
                 viewTransform.rotation
             );
             crosshair.transform.parent = _view.transform;
+            _crosshairTransform = crosshair.transform;
             AddGameObject(crosshair);
         }
 

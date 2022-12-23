@@ -7,6 +7,7 @@ using UnityEngine;
 using Utilities.Reactive.SubscriptionProperty;
 using Utilities.Unity;
 using Gameplay.Mechanics;
+using static UnityEngine.UI.Image;
 
 namespace Gameplay.Player.Movement
 {
@@ -26,12 +27,14 @@ namespace Gameplay.Player.Movement
         private Mechanics.Timer.Timer _dashCooldownTimer;
         private bool IsOnDashCooldown => _dashCooldownTimer.InProgress;
 
-        float cd;
+        float cd; //'ll delete
+        Transform _crosshairTransform;
         public PlayerMovementController(
             SubscribedProperty<Vector3> mousePositionInput,
             SubscribedProperty<float> verticalInput,
             SubscribedProperty<float> horizontalInput,
             MovementConfig config,
+            Transform crosshairTransform,
             PlayerView view)
         {
             _mousePositionInput = mousePositionInput;
@@ -41,17 +44,15 @@ namespace Gameplay.Player.Movement
             _rigidbody = _view.GetComponent<Rigidbody2D>();
             _model = new MovementModel(config);
             _dashCooldownTimer = new (config.DashCooldown);
-            cd = config.DashCooldown;
+            cd = config.DashCooldown; //'ll delete
             _speedometerView = GameUIController.PlayerSpeedometerView;
             _speedometerView.Init(GetSpeedometerTextValue(0.0f, _model.MaxSpeed));
+            _crosshairTransform = crosshairTransform;
 
             _mousePositionInput.Subscribe(HandleHorizontalMouseInput);
             _verticalInput.Subscribe(HandleVerticalInput);
             _horizontalInput.Subscribe(HandleHorizontalInput);
-            /*EntryPoint.SubscribeToUpdate(toinsp);*/
         }
-
-        void toinsp() => UnityEngine.Debug.Log($"Время кулдауна => {cd} | На кулдауне => {IsOnDashCooldown} | Работает ли таймер => {_dashCooldownTimer.InProgress}");
 
         protected override void OnDispose()
         {
@@ -61,10 +62,10 @@ namespace Gameplay.Player.Movement
             _dashCooldownTimer.Dispose();
         }
 
-
         private void HandleVerticalInput(float newInputValue)
         {
-            UnityEngine.Debug.DrawRay(_view.transform.localPosition, CalculatePerpendicularVector(_view.transform.position, newInputValue), Color.red);
+            UnityEngine.Debug.DrawRay(_view.transform.position, CalculatePerpendicularVector(_crosshairTransform.position - _view.transform.position), Color.red);
+            UnityEngine.Debug.DrawRay(_view.transform.position, _crosshairTransform.position - _view.transform.position, Color.magenta);
             if (newInputValue != 0)
             {
                 _model.Accelerate(newInputValue > 0);
@@ -97,10 +98,18 @@ namespace Gameplay.Player.Movement
         private void HandleHorizontalInput(float newInputValue)
         {
             if (!IsOnDashCooldown)
-            {   
-                _rigidbody.AddForce(CalculatePerpendicularVector(_view.transform.position, newInputValue) - _view.transform.position, ForceMode2D.Impulse);
+            {
+                if (newInputValue == 0) return;
+
+                var dir = _crosshairTransform.position - _view.transform.position;
+                dir.Normalize();
+
+                if (newInputValue > 0) _rigidbody.AddForce(CalculatePerpendicularVector(dir), ForceMode2D.Impulse);
+                else _rigidbody.AddForce(CalculatePerpendicularVector(-dir), ForceMode2D.Impulse);
+
                 _dashCooldownTimer.Start();
-                UnityEngine.Debug.Log("obana " + CalculatePerpendicularVector(_view.transform.position, newInputValue));
+
+                UnityEngine.Debug.Log("obana " + CalculatePerpendicularVector(_view.transform.position));
             }
         }
 
@@ -146,16 +155,13 @@ namespace Gameplay.Player.Movement
                 _ => $"SPD: {Mathf.RoundToInt(currentSpeed / maximumSpeed * 100)}"
             };
 
-        private Vector3 CalculatePerpendicularVector(Vector3 original, float inputValue)
+        private Vector3 CalculatePerpendicularVector(Vector3 original)
         {
-            if (inputValue == 0) return original;
-
             Vector3 perpendicularVector = new Vector3(0, 0, 0);
             perpendicularVector.x = original.y;
-            perpendicularVector.y = original.x;
+            perpendicularVector.y = -original.x;
 
-            if (inputValue > 0) { perpendicularVector.y = -perpendicularVector.y; return perpendicularVector; }
-            else { perpendicularVector.x = -perpendicularVector.x; return perpendicularVector; }
+            return perpendicularVector;
         }
     }
 }
