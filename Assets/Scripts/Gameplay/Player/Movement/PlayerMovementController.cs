@@ -154,7 +154,7 @@ namespace Gameplay.Player.Movement
             perpendicularVector.x = original.y;
             perpendicularVector.y = -original.x;
 
-            return perpendicularVector.normalized;
+            return perpendicularVector;
         }
     }
 }
