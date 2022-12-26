@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Scriptables.Space
 {
     [CreateAssetMenu(fileName = nameof(PlanetSpawnConfig), menuName = "Configs/Space/" + nameof(PlanetSpawnConfig))]
-    public class PlanetSpawnConfig : ScriptableObject
+    public sealed class PlanetSpawnConfig : ScriptableObject
     {
         [field: SerializeField] public List<WeightConfig<PlanetConfig>> WeightConfigs { get; private set; }
     }

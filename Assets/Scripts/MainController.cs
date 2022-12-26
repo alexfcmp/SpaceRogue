@@ -6,7 +6,7 @@ using UI.MainMenu;
 using UnityEngine;
 
 
-public class MainController : BaseController
+public sealed class MainController : BaseController
 {
     private readonly CurrentState _currentState;
     private readonly MainUIController _mainUIController;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI.MainMenu
 {
-    public class MainMenuController : BaseController
+    public sealed class MainMenuController : BaseController
     {
         private readonly CurrentState _currentState;
         private readonly Canvas _mainUICanvas;

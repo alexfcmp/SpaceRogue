@@ -1,6 +1,7 @@
 using Abstracts;
 using Gameplay.Player;
 using Scriptables.Enemy;
+using System.Collections.Generic;
 using UnityEngine;
 using Utilities.Mathematics;
 using Utilities.ResourceManagement;
@@ -8,13 +9,13 @@ using Utilities.Unity;
 
 namespace Gameplay.Enemy
 {
-    public class EnemyForcesController : BaseController
+    public sealed class EnemyForcesController : BaseController
     {
         private readonly ResourcePath _groupSpawnConfigPath = new(Constants.Configs.Enemy.EnemySpawnConfig);
         private readonly EnemyFactory _enemyFactory;
         private readonly PlayerController _playerController;
 
-        public EnemyForcesController(PlayerController playerController)
+        public EnemyForcesController(PlayerController playerController, List<Vector3> enemySpawnPoints)
         {
             _playerController = playerController;
             var groupSpawnConfig = ResourceLoader.LoadObject<EnemySpawnConfig>(_groupSpawnConfigPath);
@@ -23,15 +24,17 @@ namespace Gameplay.Enemy
 
             var unitSize = groupSpawnConfig.Enemy.Prefab.transform.localScale;
 
-            foreach (var enemyGroupSpawn in groupSpawnConfig.EnemyGroupsSpawnPoints)
+            var count = 0;
+            foreach (var spawnPoint in enemySpawnPoints)
             {
-                int spawnCircleRadius = enemyGroupSpawn.GroupCount * 2;
-                for (int i = 0; i < enemyGroupSpawn.GroupCount; i++)
+                int spawnCircleRadius = groupSpawnConfig.EnemyGroupsSpawnPoints[count].GroupCount * 2;
+                for (int i = 0; i < groupSpawnConfig.EnemyGroupsSpawnPoints[count].GroupCount; i++)
                 {
-                    var unitSpawnPoint = GetEmptySpawnPoint(enemyGroupSpawn.GroupSpawnPoint, unitSize, spawnCircleRadius);
+                    var unitSpawnPoint = GetEmptySpawnPoint(spawnPoint, unitSize, spawnCircleRadius);
                     var enemyController = _enemyFactory.CreateEnemy(unitSpawnPoint, _playerController);
                     AddController(enemyController);
                 }
+                count++;
             }
         }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Scriptables.Modules
 {
     [CreateAssetMenu(fileName = nameof(EngineModuleConfig), menuName = "Configs/Modules/" + nameof(EngineModuleConfig))]
-    public class EngineModuleConfig : BaseModuleConfig
+    public sealed class EngineModuleConfig : BaseModuleConfig
     {
         [Header("Speed")] 
         [Min(0.1f)]

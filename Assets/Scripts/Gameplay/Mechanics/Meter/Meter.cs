@@ -2,7 +2,7 @@ using System;
 
 namespace Gameplay.Mechanics.Meter
 {
-    public class Meter
+    public sealed class Meter
     {
         public float FillPercentage => _fill / _maxFill;
         

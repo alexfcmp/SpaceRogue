@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UI.Common
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
-    public class TextView : MonoBehaviour
+    public sealed class TextView : MonoBehaviour
     {
         private TextMeshProUGUI _text;
 

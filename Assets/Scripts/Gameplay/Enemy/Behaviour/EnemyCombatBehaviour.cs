@@ -7,11 +7,13 @@ using Utilities.Unity;
 
 namespace Gameplay.Enemy.Behaviour
 {
-    public class EnemyCombatBehaviour : EnemyBehaviour
+    public sealed class EnemyCombatBehaviour : EnemyBehaviour
     {
         private readonly EnemyInputController _inputController;
         private readonly FrontalTurretController _frontalTurret;
         private readonly float _firingAngle;
+        private EnemyState _lastEnemyState;
+
         private Vector3 _targetDirection;
         private Vector3 _currentDirection;
         private float _distance;
@@ -23,11 +25,13 @@ namespace Gameplay.Enemy.Behaviour
             PlayerController playerController,
             EnemyInputController inputController,
             FrontalTurretController frontalTurret,
-            EnemyBehaviourConfig config) : base(enemyState, view, playerController, config)
+            EnemyBehaviourConfig config,
+            EnemyState lastEnemyState) : base(enemyState, view, playerController, config)
         {
             _inputController = inputController;
             _frontalTurret = frontalTurret;
             _firingAngle = config.FiringAngle;
+            _lastEnemyState = lastEnemyState;
         }
 
         protected override void OnUpdate()
@@ -74,12 +78,12 @@ namespace Gameplay.Enemy.Behaviour
 
         private void Move()
         {
-            if (UnityHelper.Approximately(_distance, Config.ShootingDistance, 0.05f))
+            if (UnityHelper.Approximately(_distance, Config.ApproachDistance, 0.05f))
             {
                 return;
             }
 
-            if (_distance < Config.ShootingDistance)
+            if (_distance < Config.ApproachDistance)
             {
                 _inputController.Decelerate();
             }
@@ -115,7 +119,7 @@ namespace Gameplay.Enemy.Behaviour
 
         private void ExitCombat()
         {
-            ChangeState(EnemyState.PassiveRoaming);
+            ChangeState(_lastEnemyState);
         }
     }
 }

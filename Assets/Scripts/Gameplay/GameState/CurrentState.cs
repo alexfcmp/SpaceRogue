@@ -2,7 +2,7 @@ using Utilities.Reactive.SubscriptionProperty;
 
 namespace Gameplay.GameState
 {
-    public class CurrentState
+    public sealed class CurrentState
     {
         public readonly SubscribedProperty<GameState> CurrentGameState;
 

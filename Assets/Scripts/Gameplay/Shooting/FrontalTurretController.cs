@@ -17,19 +17,21 @@ namespace Gameplay.Shooting
 
         private readonly ResourcePath _gunPointPrefab = new(Constants.Prefabs.Stuff.GunPoint);
 
-        public FrontalTurretController(TurretModuleConfig config, Transform gunPointParentTransform)
+        public FrontalTurretController(TurretModuleConfig config, Transform gunPointParentTransform, UnitType unitType)
         {
             Config = config;
             var gunPointView = ResourceLoader.LoadPrefab(_gunPointPrefab);
             
             var turretPoint = Object.Instantiate(
                 gunPointView,
-                gunPointParentTransform.position + gunPointParentTransform.TransformDirection(Vector3.up * 1.5f * gunPointParentTransform.localScale.y),
+                gunPointParentTransform.position + gunPointParentTransform.TransformDirection(
+                    1.5f * gunPointParentTransform.localScale.y * Vector3.up),
                 gunPointParentTransform.rotation
             );
             turretPoint.transform.parent = gunPointParentTransform;
             
-            ProjectileFactory = new ProjectileFactory(Config.ProjectileConfig, Config.ProjectileConfig.Prefab, turretPoint.transform);
+            ProjectileFactory = new ProjectileFactory(Config.ProjectileConfig, Config.ProjectileConfig.Prefab, 
+                turretPoint.transform, unitType);
 
             CooldownTimer = new Timer(config.SpecificWeapon.Cooldown);
             

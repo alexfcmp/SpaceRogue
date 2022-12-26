@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Gameplay.Shooting
 {
     [RequireComponent(typeof(Collider))]
-    public class ProjectileView : MonoBehaviour, IDamagingView
+    public sealed class ProjectileView : MonoBehaviour, IDamagingView
     {
         public event Action CollisionEnter = () => { };
         public DamageModel DamageModel { get; private set; }

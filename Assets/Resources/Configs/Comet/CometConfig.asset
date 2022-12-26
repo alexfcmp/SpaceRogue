@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d25cfcfae511b40ac576d55c7be774, type: 3}
+  m_Name: CometConfig
+  m_EditorClassIdentifier: 
+  <CometView>k__BackingField: {fileID: 3960004671309980407, guid: 9d1f376890a27604499a6434701bcd41, type: 3}
+  <CometCount>k__BackingField: 1
+  <CheckRadius>k__BackingField: 40
+  <Size>k__BackingField: 4
+  <Damage>k__BackingField: 25
+  <LifeTimeInSeconds>k__BackingField: 2
+  <Offset>k__BackingField: 80
+  <MinSpeed>k__BackingField: 40
+  <MaxSpeed>k__BackingField: 40

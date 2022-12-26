@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Gameplay.Input
 {
-    public class KeyboardInputView : BaseInputView
+    public sealed class KeyboardInputView : BaseInputView
     {
         [SerializeField] private float verticalAxisInputMultiplier;
         [SerializeField] private float horizontalAxisInputMultiplier;
@@ -10,6 +10,7 @@ namespace Gameplay.Input
         private const string Vertical = "Vertical";
         private const string Horizontal = "Horizontal";
         private const KeyCode PrimaryFire = KeyCode.Mouse0;
+        private const KeyCode ChangeWeapon = KeyCode.Q;
 
         private void Start()
         {
@@ -17,6 +18,7 @@ namespace Gameplay.Input
             EntryPoint.SubscribeToUpdate(CheckHorizontalInput);
             EntryPoint.SubscribeToUpdate(CheckFiringInput);
             EntryPoint.SubscribeToUpdate(CheckMousePositionInput);
+            EntryPoint.SubscribeToUpdate(CheckChangeWeaponInput);
         }
 
         private void OnDestroy()
@@ -25,6 +27,7 @@ namespace Gameplay.Input
             EntryPoint.UnsubscribeFromUpdate(CheckHorizontalInput);
             EntryPoint.UnsubscribeFromUpdate(CheckFiringInput);
             EntryPoint.UnsubscribeFromUpdate(CheckMousePositionInput);
+            EntryPoint.UnsubscribeFromUpdate(CheckChangeWeaponInput);
         }
 
         private void CheckVerticalInput()
@@ -51,6 +54,12 @@ namespace Gameplay.Input
         {
             Vector3 value = UnityEngine.Input.mousePosition;
             OnMousePositionInput(value);
+        }
+
+        private void CheckChangeWeaponInput()
+        {
+            bool value = UnityEngine.Input.GetKeyDown(ChangeWeapon);
+            OnChangeWeaponInput(value);
         }
 
         private static float CalculateInputValue(float axisOffset, float inputMultiplier)

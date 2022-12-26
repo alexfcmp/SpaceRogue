@@ -4,7 +4,7 @@ using Scriptables.Modules;
 
 namespace Gameplay.Player.Inventory
 {
-    public class PlayerInventoryController : BaseController
+    public sealed class PlayerInventoryController : BaseController
     {
         private readonly PlayerInventoryConfig _config;
 

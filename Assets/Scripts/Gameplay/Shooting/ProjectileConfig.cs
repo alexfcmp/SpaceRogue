@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Gameplay.Shooting
 {
     [CreateAssetMenu(fileName = nameof(ProjectileConfig), menuName = "Configs/Projectiles/" + nameof(ProjectileConfig))]
-    public class ProjectileConfig : ScriptableObject, IIdentityItem<string>
+    public sealed class ProjectileConfig : ScriptableObject, IIdentityItem<string>
     {
         [field: SerializeField] public string Id { get; private set; } = Guid.NewGuid().ToString();
         [field: SerializeField] public ProjectileView Prefab { get; private set; }

@@ -1,25 +1,24 @@
 using Abstracts;
 using Gameplay.Player;
 using UnityEngine;
-using Utilities.Extensions;
 
 namespace Gameplay.Camera
 {
-    public class CameraController : BaseController
+    public sealed class CameraController : BaseController
     {
         private readonly CameraView _cameraView;
         private readonly PlayerController _playerController;
         private const int CameraZAxisOffset = -10;
-        private Vector3 playerPosition;
-        private Transform _cameraPosition;
-        private Transform _playerPosition;
+        
+        private Transform _cameraTransform;
+        private Transform _playerTransform;
 
         public CameraController(PlayerController playerController)
         {
             _cameraView = UnityEngine.Camera.main!.GetComponent<CameraView>();
             _playerController = playerController;
-            _cameraPosition = _cameraView.gameObject.transform;
-            _playerPosition = _playerController.View.gameObject.transform;
+            _cameraTransform = _cameraView.gameObject.transform;
+            _playerTransform = _playerController.View.gameObject.transform;
             EntryPoint.SubscribeToUpdate(FollowPlayer);
             _playerController.PlayerDestroyed += OnPlayerDestroyed;
         }
@@ -31,8 +30,8 @@ namespace Gameplay.Camera
 
         private void FollowPlayer()
         {
-            playerPosition = _playerPosition.position;
-            _cameraPosition.position = new Vector3(playerPosition.x, playerPosition.y, playerPosition.z + CameraZAxisOffset);
+            var position = _playerTransform.position;
+            _cameraTransform.position = new(position.x, position.y, position.z + CameraZAxisOffset);
         }
     }
 }

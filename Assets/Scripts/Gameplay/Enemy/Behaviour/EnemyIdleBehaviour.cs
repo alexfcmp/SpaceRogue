@@ -4,7 +4,7 @@ using Utilities.Reactive.SubscriptionProperty;
 
 namespace Gameplay.Enemy.Behaviour
 {
-    public class EnemyIdleBehaviour : EnemyBehaviour
+    public sealed class EnemyIdleBehaviour : EnemyBehaviour
     {
         public EnemyIdleBehaviour(SubscribedProperty<EnemyState> enemyState,
             EnemyView view,

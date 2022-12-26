@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: PlayerHealthConfig
   m_EditorClassIdentifier: 
   <MaximumHealth>k__BackingField: 100
-  <StartingHealth>k__BackingField: 60
-  <HealthRegen>k__BackingField: 3
+  <StartingHealth>k__BackingField: 100
+  <HealthRegen>k__BackingField: 0
+  <DamageImmunityFrameDuration>k__BackingField: 0.3

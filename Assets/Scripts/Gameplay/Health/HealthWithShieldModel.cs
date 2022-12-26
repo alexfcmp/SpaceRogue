@@ -4,7 +4,7 @@ using Utilities.Reactive.SubscriptionProperty;
 
 namespace Gameplay.Health
 {
-    public class HealthWithShieldModel : HealthOnlyModel
+    public sealed class HealthWithShieldModel : HealthOnlyModel
     {
         public SubscribedProperty<float> CurrentShield { get; }
         public SubscribedProperty<float> MaximumShield { get; }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI.Game
 {
-    public class PlayerSpeedometerView : MonoBehaviour
+    public sealed class PlayerSpeedometerView : MonoBehaviour
     {
         [field: SerializeField] public TextView SpeedometerTextView { get; private set; }
 

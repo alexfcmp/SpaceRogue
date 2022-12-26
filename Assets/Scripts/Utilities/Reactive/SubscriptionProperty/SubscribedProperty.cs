@@ -2,7 +2,7 @@ using System;
 
 namespace Utilities.Reactive.SubscriptionProperty
 {
-    public class SubscribedProperty<TValue> : ISubscribedProperty<TValue>
+    public sealed class SubscribedProperty<TValue> : ISubscribedProperty<TValue>
     {
         private TValue _value;
         private Action<TValue> _onValueChange;

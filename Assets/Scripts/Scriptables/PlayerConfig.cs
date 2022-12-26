@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Scriptables
 {
     [CreateAssetMenu(fileName = nameof(PlayerConfig), menuName = "Configs/Player/" + nameof(PlayerConfig))]
-    public class PlayerConfig : ScriptableObject
+    public sealed class PlayerConfig : ScriptableObject
     {
         [field: SerializeField] public PlayerInventoryConfig Inventory { get; private set; }
         [field: SerializeField] public MovementConfig Movement { get; private set; }

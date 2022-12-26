@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: BaseEngineConfig
   m_EditorClassIdentifier: 
   <Id>k__BackingField: base-engine-00
-  maximumSpeed: 30
+  maximumSpeed: 20
   maximumBackwardSpeed: 8
-  accelerationTime: 3
-  stoppingSpeed: 10
+  accelerationTime: 15
+  stoppingSpeed: 1
   startingTurnSpeed: 1
   maximumTurnSpeed: 10
   turnAccelerationTime: 0.1

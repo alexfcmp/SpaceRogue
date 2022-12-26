@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc225a310bce4ebbacc86a609feadf39, type: 3}
   m_Name: EnemyHealthConfig
   m_EditorClassIdentifier: 
-  <MaximumHealth>k__BackingField: 15
-  <StartingHealth>k__BackingField: 12
-  <HealthRegen>k__BackingField: 1
+  <MaximumHealth>k__BackingField: 50
+  <StartingHealth>k__BackingField: 50
+  <HealthRegen>k__BackingField: 0
   <DamageImmunityFrameDuration>k__BackingField: 0

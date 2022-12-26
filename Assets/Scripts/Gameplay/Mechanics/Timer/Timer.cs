@@ -10,6 +10,7 @@ namespace Gameplay.Mechanics.Timer
 
         public bool InProgress => _currentValue > 0.0f;
         public bool IsExpired => _currentValue == 0.0f;
+        public float CurrentValue => _currentValue;
 
         private float _maxValue;
         private float _currentValue;

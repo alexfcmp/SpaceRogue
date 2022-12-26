@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Scriptables
 {
     [Serializable]
-    public class WeightConfig<T>
+    public sealed class WeightConfig<T>
     {
         [field: SerializeField, Min(0)] public int Weight { get; private set; }
         [field: SerializeField] public T Config { get; private set; }

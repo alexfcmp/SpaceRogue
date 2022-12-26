@@ -2,7 +2,7 @@ using System;
 using Gameplay.GameState;
 using UnityEngine;
 
-public class EntryPoint : MonoBehaviour
+public sealed class EntryPoint : MonoBehaviour
 {
     [SerializeField] private Transform uiPosition;
     

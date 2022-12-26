@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BlasterWeaponConfig
   m_EditorClassIdentifier: 
   <Id>k__BackingField: bc79209c-21ef-4b45-9b21-8835ef1f5f96
-  <Cooldown>k__BackingField: 1
+  <Cooldown>k__BackingField: 0.3
   <BlasterProjectile>k__BackingField: {fileID: 11400000, guid: 0ac466bf08ce0d64296392de4a12da8d, type: 2}
   <SprayAngle>k__BackingField: 0

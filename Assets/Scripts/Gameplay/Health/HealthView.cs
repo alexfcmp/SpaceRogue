@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Gameplay.Health
 {
-    public class HealthView : MonoBehaviour
+    public sealed class HealthView : MonoBehaviour
     {
         private SliderView _healthSliderView;
         private SliderView _shieldSliderView;

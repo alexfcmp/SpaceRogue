@@ -6,7 +6,7 @@ using Utilities.Reactive.SubscriptionProperty;
 
 namespace Gameplay.Enemy.Movement
 {
-    public class EnemyMovementController : BaseController
+    public sealed class EnemyMovementController : BaseController
     {
         private readonly SubscribedProperty<float> _horizontalInput;
         private readonly SubscribedProperty<float> _verticalInput;

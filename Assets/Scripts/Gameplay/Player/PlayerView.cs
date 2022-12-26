@@ -2,7 +2,7 @@ using Abstracts;
 
 namespace Gameplay.Player
 {
-    public class PlayerView : UnitView
+    public sealed class PlayerView : UnitView
     {
     }
 }

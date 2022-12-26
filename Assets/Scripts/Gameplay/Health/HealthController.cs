@@ -6,13 +6,15 @@ using UI.Game;
 
 namespace Gameplay.Health
 {
-    public class HealthController : BaseController
+    public sealed class HealthController : BaseController
     {
         private readonly HealthStatusBarView _statusBarView;
         private readonly BaseHealthModel _healthModel;
         private readonly IDamageableView _damageable;
         
         private Action _onDestroy;
+
+        public HealthStatusBarView StatusBarView => _statusBarView;
 
         public HealthController(HealthConfig healthConfig, ShieldConfig shieldConfig, HealthShieldStatusBarView statusBarView, IDamageableView damageable)
         {
@@ -48,7 +50,8 @@ namespace Gameplay.Health
         {
             var healthModel = new HealthOnlyModel(healthConfig);
             statusBarView.HealthBar.Init(0.0f, healthModel.MaximumHealth.Value, healthModel.CurrentHealth.Value);
-            
+            _statusBarView = statusBarView;
+
             damageable.DamageTaken += TakeDamage;
             _damageable = damageable;
             
@@ -89,6 +92,17 @@ namespace Gameplay.Health
 
         private void TakeDamage(DamageModel damageModel)
         {
+            if(_damageable is UnitView view && view.UnitType == damageModel.UnitType)
+            {
+                return;
+            }
+
+            if(damageModel.UnitType == UnitType.Assistant)
+            {
+                _healthModel.TakeHealth(damageModel.DamageAmount);
+                return;
+            }
+
             _healthModel.TakeDamage(damageModel.DamageAmount);
         }
     }

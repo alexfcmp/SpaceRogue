@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace UI.Common
 {
     [RequireComponent(typeof(Slider))]
-    public class SliderView : BarView
+    public sealed class SliderView : BarView
     {
         private Slider _slider;
         

@@ -3,7 +3,7 @@ using Utilities.Reactive.SubscriptionProperty;
 
 namespace Gameplay.Enemy.Movement
 {
-    public class EnemyInputController : BaseController
+    public sealed class EnemyInputController : BaseController
     {
         private readonly SubscribedProperty<float> _horizontalInput;
         private readonly SubscribedProperty<float> _verticalInput;

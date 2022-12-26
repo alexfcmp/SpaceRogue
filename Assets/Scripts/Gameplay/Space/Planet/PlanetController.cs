@@ -1,12 +1,11 @@
 using Abstracts;
 using Gameplay.Damage;
 using Gameplay.Space.Star;
-using Scriptables.Space;
 using UnityEngine;
 
 namespace Gameplay.Space.Planet
 {
-    public class PlanetController : BaseController
+    public sealed class PlanetController : BaseController
     {
         private readonly PlanetView _view;
         private readonly float _currentSpeed;
@@ -17,6 +16,7 @@ namespace Gameplay.Space.Planet
         public PlanetController(PlanetView view, StarView starView, float speed, bool isMovingRetrograde, float planetDamage)
         {
             _view = view;
+            _view.transform.parent = starView.transform;
 
             var damageModel = new DamageModel(planetDamage);
             view.Init(damageModel);

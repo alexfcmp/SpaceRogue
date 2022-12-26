@@ -15,11 +15,11 @@ MonoBehaviour:
   <Inventory>k__BackingField: {fileID: 11400000, guid: 03ce0e0863b4ca143be37e58bbb847be, type: 2}
   <Movement>k__BackingField:
     maximumSpeed: 15
-    maximumBackwardSpeed: 8
-    accelerationTime: 1
-    stoppingSpeed: 6
-    startingTurnSpeed: 0.3
-    maximumTurnSpeed: 1
+    maximumBackwardSpeed: 3
+    accelerationTime: 2
+    stoppingSpeed: 0.1
+    startingTurnSpeed: 3
+    maximumTurnSpeed: 10
     turnAccelerationTime: 0.2
     DashCooldown: 3
     DashForce: 10

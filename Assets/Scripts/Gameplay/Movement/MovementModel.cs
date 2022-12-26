@@ -3,17 +3,19 @@ using UnityEngine.Rendering;
 
 namespace Gameplay.Movement
 {
-    public class MovementModel
+    public sealed class MovementModel
     {
         private readonly MovementConfig _config;
+        private float TurnSpeedDifference => _config.maximumTurnSpeed - _config.startingTurnSpeed;
+
         public float MaxSpeed => _config.maximumSpeed;
         public float StoppingSpeed => _config.stoppingSpeed;
+        public float StartingTurnSpeed => _config.startingTurnSpeed;
 
         public float CurrentSpeed { get; private set; }
         public float CurrentTurnRate { get; private set; }
         
         
-        private float TurnSpeedDifference => _config.maximumTurnSpeed - _config.startingTurnSpeed;
         public MovementModel(MovementConfig config)
         {
             _config = config;

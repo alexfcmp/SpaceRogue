@@ -17,5 +17,5 @@ MonoBehaviour:
   <MinigunProjectile>k__BackingField: {fileID: 11400000, guid: b2a657a5c9ca54544a3d0cfd4070af1a, type: 2}
   <SprayAngle>k__BackingField: 10
   <MaxSprayAngle>k__BackingField: 30
-  <OverheatCoolDown>k__BackingField: 3
-  <TimeToOverheat>k__BackingField: 3
+  <OverheatCoolDown>k__BackingField: 5
+  <TimeToOverheat>k__BackingField: 5

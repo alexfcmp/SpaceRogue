@@ -13,6 +13,7 @@ namespace Gameplay.Enemy.Behaviour
 
         private readonly SubscribedProperty<EnemyState> _enemyState;
         private bool _isDisposed;
+        private EnemyState _lastEnemyState;
 
         public void Dispose()
         {
@@ -35,17 +36,27 @@ namespace Gameplay.Enemy.Behaviour
             Config = config;
             EntryPoint.SubscribeToUpdate(DetectPlayer);
             EntryPoint.SubscribeToUpdate(OnUpdate);
+            _lastEnemyState = _enemyState.Value;
         }
 
         protected void ChangeState(EnemyState newState)
         {
-            if (newState != _enemyState.Value) _enemyState.Value = newState;
+            if (newState != _enemyState.Value)
+            {
+                _lastEnemyState = _enemyState.Value;
+                _enemyState.Value = newState;
+            }
         }
-        
+
         protected abstract void OnUpdate();
         protected virtual void OnDispose() { }
 
         protected abstract void DetectPlayer();
+
+        public EnemyState CurrentState()
+        {
+            return _lastEnemyState;
+        }
 
         private void OnPlayerDestroyed()
         {

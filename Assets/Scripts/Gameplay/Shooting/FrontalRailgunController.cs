@@ -1,13 +1,14 @@
+using Abstracts;
 using Scriptables.Modules;
 using UnityEngine;
 
 namespace Gameplay.Shooting
 {
-    public class FrontalRailgunController : FrontalTurretController
+    public sealed class FrontalRailgunController : FrontalTurretController
     {
         private readonly RailgunWeaponConfig _weaponConfig;
 
-        public FrontalRailgunController(TurretModuleConfig config, Transform gunPointParentTransform) : base(config, gunPointParentTransform)
+        public FrontalRailgunController(TurretModuleConfig config, Transform gunPointParentTransform, UnitType unitType) : base(config, gunPointParentTransform, unitType)
         {
             var railgunConfig = config.SpecificWeapon as RailgunWeaponConfig;
             _weaponConfig = railgunConfig 

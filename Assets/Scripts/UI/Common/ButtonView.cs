@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace UI.Common
 {
     [RequireComponent(typeof(Button))]
-    public class ButtonView : MonoBehaviour, IButtonView
+    public sealed class ButtonView : MonoBehaviour, IButtonView
     {
         private Button _button;
 

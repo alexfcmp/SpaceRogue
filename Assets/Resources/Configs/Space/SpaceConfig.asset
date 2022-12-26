@@ -12,23 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40a5787d9ef46aab5ccecdeeaf318a2, type: 3}
   m_Name: SpaceConfig
   m_EditorClassIdentifier: 
-  <StarSpawnPoints>k__BackingField:
-  - {x: 40, y: 80, z: 0}
-  - {x: -140, y: -50, z: 0}
-  - {x: 400, y: 150, z: 0}
-  - {x: -200, y: -300, z: 0}
-  - {x: 120, y: -400, z: 0}
-  - {x: -200, y: 120, z: 0}
-  - {x: 100, y: -120, z: 0}
-  - {x: 300, y: -200, z: 0}
-  - {x: 200, y: 50, z: 0}
-  - {x: 80, y: -240, z: 0}
-  - {x: -30, y: -100, z: 0}
-  - {x: 300, y: 0, z: 0}
-  - {x: -270, y: -270, z: 0}
-  - {x: 120, y: 200, z: 0}
-  - {x: -420, y: -70, z: 0}
-  - {x: 50, y: 300, z: 0}
-  - {x: -250, y: 280, z: 0}
-  - {x: 400, y: 450, z: 0}
-  - {x: -300, y: 400, z: 0}
+  <BorderTileBase>k__BackingField: {fileID: 11400000, guid: aa069b4832a26e34c808bfcaf9f60f9e, type: 2}
+  <BorderMaskTileBase>k__BackingField: {fileID: 11400000, guid: ab5bfea862654ad4f99c93531db99a2e, type: 2}
+  <NebulaTileBase>k__BackingField: {fileID: 11400000, guid: aa069b4832a26e34c808bfcaf9f60f9e, type: 2}
+  <NebulaMaskTileBase>k__BackingField: {fileID: 11400000, guid: ab5bfea862654ad4f99c93531db99a2e, type: 2}
+  <WidthMap>k__BackingField: 128
+  <HeightMap>k__BackingField: 128
+  <OuterBorder>k__BackingField: 3
+  <InnerBorder>k__BackingField: 12
+  <SmoothMapType>k__BackingField: 0
+  <FactorSmooth>k__BackingField: 8
+  <RandomType>k__BackingField: 0
+  <Chance>k__BackingField: 0.43
+  <StarCount>k__BackingField: 20
+  <AutoRadius>k__BackingField: 0
+  <ManualRadius>k__BackingField: 5
+  <ObstacleForce>k__BackingField: 2

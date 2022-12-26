@@ -2,7 +2,7 @@ using System;
 
 namespace Gameplay.Mechanics.Meter
 {
-    public class MeterWithCooldown : IDisposable
+    public sealed class MeterWithCooldown : IDisposable
     {
         public float FillPercentage => _fill / _maxFill;
         public bool IsOnCooldown => FillPercentage == 1.0f;

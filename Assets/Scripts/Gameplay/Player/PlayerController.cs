@@ -14,11 +14,10 @@ using UI.Game;
 using UnityEngine;
 using Utilities.Reactive.SubscriptionProperty;
 using Utilities.ResourceManagement;
-using Utilities.Unity;
 
 namespace Gameplay.Player
 {
-    public class PlayerController : BaseController
+    public sealed class PlayerController : BaseController
     {
         public PlayerView View => _view;
 
@@ -33,6 +32,7 @@ namespace Gameplay.Player
         private readonly SubscribedProperty<float> _verticalInput = new();
         private readonly SubscribedProperty<float> _horizontalInput = new();
         private readonly SubscribedProperty<bool> _primaryFireInput = new();
+        private readonly SubscribedProperty<bool> _changeWeaponInput = new ();
 
         private const byte MaxCountOfPlayerSpawnTries = 10;
         private const float PlayerSpawnClearanceRadius = 40.0f;
@@ -41,12 +41,12 @@ namespace Gameplay.Player
 
         public event Action PlayerDestroyed = () => { };
 
-        public PlayerController()
+        public PlayerController(Vector3 playerPosition)
         {
             _config = ResourceLoader.LoadObject<PlayerConfig>(_configPath);
-            _view = LoadView<PlayerView>(_viewPath, GetPlayerSpawnPosition());
+            _view = LoadView<PlayerView>(_viewPath, playerPosition);
 
-            var inputController = new InputController(_mousePositionInput, _verticalInput, _horizontalInput, _primaryFireInput);
+            var inputController = new InputController(_mousePositionInput, _verticalInput, _horizontalInput, _primaryFireInput, _changeWeaponInput);
             AddController(inputController);
 
             var inventoryController = AddInventoryController(_config.Inventory);
@@ -81,35 +81,9 @@ namespace Gameplay.Player
 
         private FrontalGunsController AddFrontalGunsController(List<TurretModuleConfig> turretConfigs, PlayerView view)
         {
-            var frontalGunsController = new FrontalGunsController(_primaryFireInput, turretConfigs, view);
+            var frontalGunsController = new FrontalGunsController(_primaryFireInput, _changeWeaponInput, turretConfigs, view);
             AddController(frontalGunsController);
             return frontalGunsController;
-        }
-
-        private Vector3 GetPlayerSpawnPosition()
-        {
-            Vector3 startPlayerPosition;
-            int tryCount = 0;
-            do
-            {
-                startPlayerPosition = RandomizePlayerStartPosition();
-                tryCount++;
-            }
-            while (UnityHelper.IsAnyObjectAtPosition(startPlayerPosition, PlayerSpawnClearanceRadius) && tryCount <= MaxCountOfPlayerSpawnTries);
-
-            if (tryCount > MaxCountOfPlayerSpawnTries)
-            {
-                //TODO Clear position for player spawn when too many tries happened
-            }
-
-            return startPlayerPosition;
-        }
-
-        private Vector3 RandomizePlayerStartPosition()
-        {
-            var random = new System.Random();
-            //TODO Change according to map boundaries
-            return new Vector3(random.Next(-400, 400), random.Next(-400, 400), 0);
         }
 
         private void AddCrosshair()

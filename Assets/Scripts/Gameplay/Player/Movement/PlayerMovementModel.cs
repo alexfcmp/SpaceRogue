@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Gameplay.Player.Movement
 {
-    public class PlayerMovementModel
+    public sealed class PlayerMovementModel
     {
         private readonly EngineModuleConfig _config;
         public float MaxSpeed => _config.maximumSpeed;

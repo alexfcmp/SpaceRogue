@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d517337697cef0541a34769e2f9c3d4a, type: 3}
+  m_Name: CaravanTrapGameEventConfig
+  m_EditorClassIdentifier: 
+  <GameEventType>k__BackingField: 4
+  <Icon>k__BackingField: {fileID: 21300000, guid: b237c479bee801144bcf9f06132ca2cc, type: 3}
+  <IndicatorDiameter>k__BackingField: 625
+  <IsRecurring>k__BackingField: 1
+  <ResponseTimeInSeconds>k__BackingField: 60
+  <Chance>k__BackingField: 0.33
+  <CaravanConfig>k__BackingField: {fileID: 11400000, guid: a82570eb9917acd4285e454e0d8eb357, type: 2}
+  <SpawnOffset>k__BackingField: 5
+  <PathDistance>k__BackingField: 200
+  <EnemyConfig>k__BackingField: {fileID: 11400000, guid: 7c10e32674e524940ae0a101cd8e11c0, type: 2}
+  <EnemyCount>k__BackingField: 3
+  <AlertRadius>k__BackingField: 70

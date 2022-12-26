@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Gameplay.Shooting
 {
     [CreateAssetMenu(fileName = nameof(ShotgunWeaponConfig), menuName = "Configs/Weapons/" + nameof(ShotgunWeaponConfig))]
-    public class ShotgunWeaponConfig : SpecificWeaponConfig
+    public sealed class ShotgunWeaponConfig : SpecificWeaponConfig
     {
         [field: SerializeField] public ProjectileConfig ShotgunProjectile { get; private set; }
         [field: SerializeField, Min(1)] public int PelletCount { get; private set; } = 3;

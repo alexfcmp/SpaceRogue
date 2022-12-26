@@ -22,13 +22,19 @@ namespace Gameplay.Health
         internal BaseHealthModel(HealthConfig healthConfig)
         {
             MaximumHealth = new SubscribedProperty<float>(healthConfig.MaximumHealth);
-            CurrentHealth = new SubscribedProperty<float>(healthConfig.StartingHealth);
+            var correctHealth = Mathf.Clamp(healthConfig.StartingHealth, 0f, healthConfig.MaximumHealth);
+            CurrentHealth = new SubscribedProperty<float>(correctHealth);
             HealthRegenAmount = healthConfig.HealthRegen;
             DamageImmunityFrameDuration = healthConfig.DamageImmunityFrameDuration;
         }
-        
+
         internal abstract void UpdateState();
         internal abstract void TakeDamage(float damageAmount);
+
+        internal virtual void TakeHealth(float heathValue)
+        {
+            TakeHealthDamage(-heathValue);
+        }
 
         protected void OnUnitDestroyed()
         {

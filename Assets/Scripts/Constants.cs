@@ -28,6 +28,20 @@ public static class Constants
             public static readonly string DefaultStarSpawn = Path.Combine(SPACE, nameof(DefaultStarSpawn));
             public static readonly string DefaultPlanetSpawn = Path.Combine(SPACE, nameof(DefaultPlanetSpawn));
         }
+
+        public record Background
+        {
+            private static readonly string BACKGROUND = Path.Combine(CONFIGS, nameof(Background));
+
+            public static readonly string BackgroundConfig = Path.Combine(BACKGROUND, nameof(BackgroundConfig));
+        }
+        
+        public record GameEvent
+        {
+            private static readonly string GAMEEVENT = Path.Combine(CONFIGS, nameof(GameEvent));
+
+            public static readonly string GeneralGameEventConfig = Path.Combine(GAMEEVENT, nameof(GeneralGameEventConfig));
+        }
     }
 
     public record Prefabs
@@ -46,6 +60,13 @@ public static class Constants
             private static readonly string GAMEPLAY = Path.Combine(PREFABS, nameof(Gameplay));
 
             public static readonly string Player = Path.Combine(GAMEPLAY, nameof(Player));
+
+            public record Space
+            {
+                private static readonly string SPACE = Path.Combine(GAMEPLAY, nameof(Space));
+
+                public static readonly string Level = Path.Combine(SPACE, nameof(Level));
+            }
         }
 
         public record Stuff
@@ -54,6 +75,7 @@ public static class Constants
 
             public static readonly string GunPoint = Path.Combine(STUFF, nameof(GunPoint));
             public static readonly string Crosshair = Path.Combine(STUFF, nameof(Crosshair));
+            public static readonly string Background = Path.Combine(STUFF, nameof(Background));
         }
 
         public record Canvas
@@ -69,7 +91,11 @@ public static class Constants
 
                 public static readonly string StatusBarCanvas = Path.Combine(GAME, nameof(StatusBarCanvas));
                 public static readonly string SpeedometerCanvas = Path.Combine(GAME, nameof(SpeedometerCanvas));
+                public static readonly string WeaponCanvas = Path.Combine(GAME, nameof(WeaponCanvas));
                 public static readonly string DestroyPlayerCanvas = Path.Combine(GAME, nameof(DestroyPlayerCanvas));
+                public static readonly string EnemyHealthStatusBarCanvas = Path.Combine(GAME, nameof(EnemyHealthStatusBarCanvas));
+                public static readonly string EnemyHealthShieldStatusBarCanvas = Path.Combine(GAME, nameof(EnemyHealthShieldStatusBarCanvas));
+                public static readonly string GameEventIndicatorCanvas = Path.Combine(GAME, nameof(GameEventIndicatorCanvas));
             }
         }
     }

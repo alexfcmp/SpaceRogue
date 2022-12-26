@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: RuinedPlanetConfig
   m_EditorClassIdentifier: 
   <Prefab>k__BackingField: {fileID: -6696340050246795805, guid: bbc684a12b2195d4386b167008a495b3, type: 3}
-  <MinSpeed>k__BackingField: 3
-  <MaxSpeed>k__BackingField: 8
+  <MinSpeed>k__BackingField: 2
+  <MaxSpeed>k__BackingField: 4
   <RetrogradeMovementChance>k__BackingField: 0.5
   <MinSize>k__BackingField: 5
   <MaxSize>k__BackingField: 10
-  <MinDamage>k__BackingField: 2
-  <MaxDamage>k__BackingField: 8
+  <MinDamage>k__BackingField: 10
+  <MaxDamage>k__BackingField: 20

@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 
 namespace Gameplay.Space
 {
-    public class SpaceObjectFactory
+    public sealed class SpaceObjectFactory
     {
         private readonly StarSpawnConfig _starSpawnConfig;
         private readonly PlanetSpawnConfig _planetSpawnConfig;
@@ -22,7 +22,7 @@ namespace Gameplay.Space
             _random = new System.Random();
         }
         
-        public (StarController, PlanetController[]) CreateStarSystem(Vector3 starSpawnPosition)
+        public (StarController, PlanetController[]) CreateStarSystem(Vector3 starSpawnPosition, Transform starsParent)
         {
             var config = PickStar(_starSpawnConfig.WeightConfigs, _random);
             float starSize = RandomPicker.PickRandomBetweenTwoValues(config.MinSize, config.MaxSize, _random);
@@ -31,7 +31,7 @@ namespace Gameplay.Space
             int planetCount = RandomPicker.PickRandomBetweenTwoValues(config.MinPlanetCount, config.MaxPlanetCount, _random);
             var planets = new PlanetController[planetCount];
             
-            if (planetCount <= 0) return (new StarController(starView), planets);
+            if (planetCount <= 0) return (new StarController(starView, starsParent), planets);
 
             float[] planetOrbits = GetPlanetOrbitList(planetCount, config.MinOrbit, config.MaxOrbit, starSize, _random);
 
@@ -45,7 +45,7 @@ namespace Gameplay.Space
                 var planetView = CreatePlanetView(planetConfig.Prefab, planetSize, starSize, planetOrbits[i], starSpawnPosition);
                 planets[i] = new PlanetController(planetView, starView, planetSpeed, isPlanetMovingRetrograde, planetDamage);
             }
-            return (new StarController(starView), planets);
+            return (new StarController(starView, starsParent), planets);
         }
 
         private static StarView CreateStarView(StarView prefab, float size, Vector3 spawnPosition)

@@ -4,7 +4,7 @@ using Utilities.ResourceManagement;
 
 namespace UI
 {
-    public class MainUIController : BaseController
+    public sealed class MainUIController : BaseController
     {
         public Canvas MainCanvas { get; }
         

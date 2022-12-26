@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Utilities.Unity
@@ -24,6 +25,11 @@ namespace Utilities.Unity
         public static bool DirectionInsideAngle(Vector3 targetDirection, Vector3 currentDirection, float angle)
         {
             return Mathf.Abs(Vector2.SignedAngle(targetDirection, currentDirection)) <= angle / 2;
+        }
+
+        public static bool IsObjectVisible(this Camera camera, Bounds bounds)
+        {
+            return GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(camera), bounds);
         }
     }
 }

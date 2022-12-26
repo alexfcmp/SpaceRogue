@@ -16,4 +16,7 @@ MonoBehaviour:
   <Shields>k__BackingField:
   - {fileID: 11400000, guid: b7c465fc8e6f3a94a9bb635d26f1a800, type: 2}
   <Turrets>k__BackingField:
-  - {fileID: 11400000, guid: b774d047ca3666840a69dea21314ae6c, type: 2}
+  - {fileID: 11400000, guid: 0f6197e278e4baf429f1d5de79a8cfda, type: 2}
+  - {fileID: 11400000, guid: 5d86c4e99a57c6d479471c40d48e6f5d, type: 2}
+  - {fileID: 11400000, guid: fb2753ca929bff248a79b24326b927ee, type: 2}
+  - {fileID: 11400000, guid: a76eafe3e7931ec4498a2b6b902f7595, type: 2}
